@@ -1,5 +1,5 @@
 {
-    "name": "gii/module-organization",
+    "name": "hanafalah/module-organization",
     "description": "module for service in klinik or puskesmas",
     "type": "library",
     "require": {
@@ -8,17 +8,17 @@
         "http-interop/http-factory-guzzle": "^1.2",
         "illuminate/support": "^11.26",
         "symfony/process": "^7.1",
-        "zahzah/laravel-support": "1.x"
+        "hanafalah/laravel-support": "1.x"
     },
     "autoload": {
         "psr-4": {
-            "Gii\\ModuleOrganization\\": "src/"
+            "Hanafalah\\ModuleOrganization\\": "src/"
         }
     },
     "extra": {
         "laravel": {
             "providers": [
-                "Gii\\ModuleOrganization\\ModuleOrganizationServiceProvider"
+                "Hanafalah\\ModuleOrganization\\ModuleOrganizationServiceProvider"
             ]
         }
     },

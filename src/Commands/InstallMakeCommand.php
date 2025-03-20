@@ -1,8 +1,9 @@
 <?php
 
-namespace Gii\ModuleOrganization\Commands;
+namespace Hanafalah\ModuleOrganization\Commands;
 
-class InstallMakeCommand extends EnvironmentCommand{
+class InstallMakeCommand extends EnvironmentCommand
+{
     /**
      * The name and signature of the console command.
      *
@@ -23,7 +24,7 @@ class InstallMakeCommand extends EnvironmentCommand{
      */
     public function handle()
     {
-        $provider = 'Gii\ModuleOrganization\ModuleOrganizationServiceProvider';
+        $provider = 'Hanafalah\ModuleOrganization\ModuleOrganizationServiceProvider';
 
         $this->callSilent('vendor:publish', [
             '--provider' => $provider,
@@ -35,12 +36,12 @@ class InstallMakeCommand extends EnvironmentCommand{
         $this->callSilent('migrate', [
             '--path' => $migrations
         ]);
-        
+
         $this->callSilent('migrate', [
             '--path' => $migrations
         ]);
         $this->info('✔️  Module Card Identities tables migrated');
 
-        $this->comment('gii/module-organization installed successfully.');
+        $this->comment('hanafalah/module-organization installed successfully.');
     }
 }

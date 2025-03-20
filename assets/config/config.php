@@ -1,6 +1,6 @@
 <?php
 
-use Gii\ModuleOrganization\Models as ModuleOrganization;
+use Hanafalah\ModuleOrganization\Models as ModuleOrganization;
 
 return [
     'database' => [

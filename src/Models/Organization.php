@@ -1,17 +1,18 @@
 <?php
 
-namespace Gii\ModuleOrganization\Models;
+namespace Hanafalah\ModuleOrganization\Models;
 
-use Gii\ModuleOrganization\Resources\ShowOrganization;
-use Gii\ModuleOrganization\Resources\ViewOrganization;
-use Zahzah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\ModuleOrganization\Resources\ShowOrganization;
+use Hanafalah\ModuleOrganization\Resources\ViewOrganization;
+use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Illuminate\Database\Eloquent\SoftDeletes;
-use Zahzah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\BaseModel;
 
-class Organization extends BaseModel {
+class Organization extends BaseModel
+{
     use HasProps, SoftDeletes;
 
-    protected $list                 = ["id","name","flag", "parent_id", "props"];
+    protected $list                 = ["id", "name", "flag", "parent_id", "props"];
     protected $show                 = [];
     public static $__flags_service  = [];
     protected $casts = [
@@ -22,20 +23,23 @@ class Organization extends BaseModel {
         'name' => 'name'
     ];
 
-    public function toShowApi(){
+    public function toShowApi()
+    {
         return new ShowOrganization($this);
     }
 
-    public function toViewApi(){
+    public function toViewApi()
+    {
         return new ViewOrganization($this);
     }
 
-    public function scopeSetIdentityFlags($builder,array $flags){
+    public function scopeSetIdentityFlags($builder, array $flags)
+    {
         self::$__flags_service = $flags;
     }
 
-    public function modelHasOrganization(){
-        return $this->morphOneModel('ModelHasOrganization','reference');
+    public function modelHasOrganization()
+    {
+        return $this->morphOneModel('ModelHasOrganization', 'reference');
     }
 }
-

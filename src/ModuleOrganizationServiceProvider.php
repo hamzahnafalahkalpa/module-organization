@@ -1,14 +1,14 @@
 <?php
 
-namespace Gii\ModuleOrganization;
+namespace Hanafalah\ModuleOrganization;
 
-use Gii\ModuleOrganization\{
+use Hanafalah\ModuleOrganization\{
     Schemas\Organization as OrganizationSchema,
     Schemas\ModelHasOrganization as ModelHasOrganizationSchema,
     Models\Organization  as OrganizationModel,
     Contracts,
 };
-use Zahzah\LaravelSupport\Providers\BaseServiceProvider;
+use Hanafalah\LaravelSupport\Providers\BaseServiceProvider;
 
 class ModuleOrganizationServiceProvider extends BaseServiceProvider
 {
@@ -20,24 +20,26 @@ class ModuleOrganizationServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->registerMainClass(ModuleOrganization::class)
-             ->registerCommandService(Providers\CommandServiceProvider::class)
-             ->registers([
+            ->registerCommandService(Providers\CommandServiceProvider::class)
+            ->registers([
                 '*',
-                'Services'  => function(){
+                'Services'  => function () {
                     $this->binds([
                         Contracts\ModuleOrganization::class    => OrganizationModel::class,
                         Contracts\Organization::class          => OrganizationSchema::class,
                         Contracts\ModelHasOrganization::class  => ModelHasOrganizationSchema::class,
                     ]);
                 },
-             ]);
+            ]);
     }
 
-    protected function dir(): string{
-        return __DIR__.'/';
+    protected function dir(): string
+    {
+        return __DIR__ . '/';
     }
 
-    protected function migrationPath(string $path = ''): string{
+    protected function migrationPath(string $path = ''): string
+    {
         return database_path($path);
     }
 }
