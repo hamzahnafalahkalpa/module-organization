@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Hanafalah\LaravelFeature\Supports\BaseLaravelFeature;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleOrganization\Contracts as Contracts;
+use Hanafalah\ModuleOrganization\Contracts\Schemas as Contracts;
 use Hanafalah\ModulePatient\Enums\VisitRegistration\RegistrationStatus;
 
 class ModelHasOrganization extends PackageManagement implements Contracts\ModelHasOrganization

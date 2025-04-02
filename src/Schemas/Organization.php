@@ -5,7 +5,7 @@ namespace Hanafalah\ModuleOrganization\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
-use Hanafalah\ModuleOrganization\Contracts as Contracts;
+use Hanafalah\ModuleOrganization\Contracts\Schemas as Contracts;
 use Hanafalah\ModuleOrganization\Resources\ShowOrganization;
 use Hanafalah\ModuleOrganization\Resources\ViewOrganization;
 use Illuminate\Database\Eloquent\Model;
