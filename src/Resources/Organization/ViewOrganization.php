@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleOrganization\Resources;
+namespace Hanafalah\ModuleOrganization\Resources\Organization;
 
 use Hanafalah\LaravelSupport\Resources\ApiResource;
 
@@ -8,7 +8,6 @@ class ViewOrganization extends ApiResource
 {
   public function toArray(\Illuminate\Http\Request $request): array
   {
-    $props = $this->getPropsData() ?? [];
     $arr = [
       'id'            => $this->id,
       'name'          => $this->name,
@@ -18,8 +17,6 @@ class ViewOrganization extends ApiResource
       'created_at'    => $this->created_at,
       'updated_at'    => $this->updated_at
     ];
-    $arr = $this->mergeArray($props, $arr);
-
     return $arr;
   }
 }

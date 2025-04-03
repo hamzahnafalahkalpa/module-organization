@@ -2,17 +2,18 @@
 
 namespace Hanafalah\ModuleOrganization\Models;
 
-use Hanafalah\ModuleOrganization\Resources\ShowOrganization;
-use Hanafalah\ModuleOrganization\Resources\ViewOrganization;
+use Hanafalah\ModuleOrganization\Resources\Organization\{ViewOrganization,ShowOrganization};
 use Hanafalah\LaravelHasProps\Concerns\HasProps;
+use Hanafalah\LaravelSupport\Concerns\Support\HasPhone;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Models\BaseModel;
+use Hanafalah\ModuleRegional\Concerns\HasAddress;
 
 class Organization extends BaseModel
 {
-    use HasProps, SoftDeletes;
+    use HasProps, SoftDeletes, HasAddress, HasPhone;
 
-    protected $list                 = ["id", "name", "flag", "parent_id", "props"];
+    protected $list                 = ["id", "parent_id", "name", "flag", "props"];
     protected $show                 = [];
     public static $__flags_service  = [];
     protected $casts = [
@@ -23,23 +24,17 @@ class Organization extends BaseModel
         'name' => 'name'
     ];
 
-    public function toShowApi()
-    {
-        return new ShowOrganization($this);
+    public function getShowResource(){
+        return ShowOrganization::class;
     }
 
-    public function toViewApi()
-    {
-        return new ViewOrganization($this);
+    public function getViewResource(){
+        return ViewOrganization::class;
     }
 
-    public function scopeSetIdentityFlags($builder, array $flags)
-    {
+    public function scopeSetIdentityFlags($builder, array $flags){
         self::$__flags_service = $flags;
     }
 
-    public function modelHasOrganization()
-    {
-        return $this->morphOneModel('ModelHasOrganization', 'reference');
-    }
+    public function modelHasOrganization(){return $this->morphOneModel('ModelHasOrganization', 'reference');}
 }

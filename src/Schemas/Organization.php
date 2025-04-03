@@ -5,9 +5,8 @@ namespace Hanafalah\ModuleOrganization\Schemas;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Hanafalah\LaravelSupport\Supports\PackageManagement;
+use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
 use Hanafalah\ModuleOrganization\Contracts\Schemas as Contracts;
-use Hanafalah\ModuleOrganization\Resources\ShowOrganization;
-use Hanafalah\ModuleOrganization\Resources\ViewOrganization;
 use Illuminate\Database\Eloquent\Model;
 
 class Organization extends PackageManagement implements Contracts\Organization
@@ -17,11 +16,6 @@ class Organization extends PackageManagement implements Contracts\Organization
     protected string $__entity = 'Organization';
     public static $organization_model;
 
-    protected array $__resources = [
-        'view' => ViewOrganization::class,
-        'show' => ShowOrganization::class
-    ];
-
     protected array $__cache = [
         'index' => [
             'name'     => 'organization',
@@ -30,59 +24,65 @@ class Organization extends PackageManagement implements Contracts\Organization
         ]
     ];
 
-    protected function showUsingRelation()
-    {
+    protected function viewUsingRelation(){
         return [];
     }
 
-    public function prepareShowOrganization(?Model $model = null): ?Model
-    {
-        $this->booting();
+    protected function showUsingRelation(){
+        return [];
+    }
 
-        $model ??= $this->getAgent();
-        $id = request()->id;
-        if (!request()->has('id')) throw new \Exception('No id provided', 422);
+    public function getOrganization(): mixed{
+        return static::$organization_model;
+    }
 
-        if (!isset($model)) $model = $this->OrganizationModel()->find($id);
+    public function prepareShowOrganization(?Model $model = null, ? array $attributes = null): ?Model{
+        $attributes ??= \request()->all();
+
+        $model ??= $this->getOrganization();
+        if (!isset($model)){
+            $id = $attributes['id'] ?? null;
+            if (!isset($id)) throw new \Exception('Id not found');
+            $model = $this->organization()->with($this->showUsingRelation())->findOrFail($id);
+        }else{
+            $model->load($this->showUsingRelation());
+        }
         return static::$organization_model = $model;
     }
 
-    public function showOrganization(?Model $model = null): array
-    {
-        return $this->transforming($this->__resources['show'], $this->prepareShowOrganization($model));
-    }
-
-    public function prepareStoreOrganization(mixed $attributes = null): Model
-    {
-        $attributes ??= request()->all();
-        $organization = $this->OrganizationModel();
-        if (isset($attributes['id'])) $organization = $organization->find($attributes['id']);
-
-        $exceptions = [];
-        foreach ($attributes as $key => $attribute) {
-            if ($this->inArray($key, $exceptions)) continue;
-            $organization->{$key} = $attribute;
-        }
-
-        $organization->save();
-        static::$organization_model = $organization;
-        return $organization;
-    }
-
-    public function storeOrganization(): array
-    {
-        return $this->transaction(function () {
-            return $this->showOrganization($this->prepareStoreOrganization());
+    public function showOrganization(?Model $model = null): array{
+        return $this->showEntityResource(function() use ($model){
+            $this->prepareShowOrganization($model);
         });
     }
 
-    private function localAddSuffixCache(mixed $suffix): void
-    {
+    public function prepareStoreOrganization(OrganizationData $organization_dto): Model{
+        $organization = $this->{$this->__entity.'Model'}()->updateOrCreate([
+            'id' => $organization_dto->id ?? null
+        ],[
+            'parent_id' => $organization_dto->parent_id ?? null,
+            'name'      => $organization_dto->name,
+            'flag'      => $this->__entity
+        ]);
+        foreach ($organization_dto->props as $key => $value) {
+            $organization->{$key} = $value;
+        }
+
+        $organization->save();
+        return static::$organization_model = $organization;
+    }
+
+    public function storeOrganization(?OrganizationData $organization_dto = null): array{
+        return $this->transaction(function() use ($organization_dto){
+            return $this->showOrganization($this->prepareStoreOrganization($organization_dto ?? $this->requestDTO(OrganizationData::class)));
+        });
+    }
+
+    private function localAddSuffixCache(mixed $suffix): void{
         $this->addSuffixCache($this->__cache['index'], "organization-index", $suffix);
     }
 
-    public function prepareViewOrganizationList(?array $attributes = null): Collection
-    {
+    public function prepareViewOrganizationList(?array $attributes = null): Collection{
         $attributes ??= request()->all();
         if (isset($attributes['flag'])) {
             $attributes['flag'] = $this->mustArray($attributes['flag']);
@@ -95,32 +95,14 @@ class Organization extends PackageManagement implements Contracts\Organization
         });
     }
 
-    public function viewOrganizationList(): array
-    {
-        return $this->transforming($this->__resources['view'], function () {
+    public function viewOrganizationList(): array{
+        return $this->viewEntityResource(function() {
             return $this->prepareViewOrganizationList();
         });
     }
 
-    public function addOrChange(?array $attributes = []): self
-    {
-        $this->updateOrCreate($attributes);
-        return $this;
-    }
-
-    public function refind(mixed $id = null): Model|null
-    {
-        return $this->organization()->where("id", $id ??= request()->id)->first();
-    }
-
-    public function get(mixed $conditionals = []): Collection
-    {
-        return $this->organization()->withParameters()->conditionals($conditionals)->get();
-    }
-
-    public function organization(mixed $conditionals = []): Builder
-    {
+    public function organization(mixed $conditionals = []): Builder{
         $this->booting();
-        return $this->OrganizationModel()->conditionals($conditionals)->withParameters()->orderBy('name', 'asc');
+        return $this->{$this->__entity.'Model'}()->conditionals($this->mergeCondition($conditionals ?? []))->withParameters()->orderBy('name', 'asc');
     }
 }
