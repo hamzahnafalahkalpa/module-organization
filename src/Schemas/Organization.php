@@ -24,11 +24,11 @@ class Organization extends PackageManagement implements Contracts\Organization
         ]
     ];
 
-    protected function viewUsingRelation(){
+    protected function viewUsingRelation(): array{
         return [];
     }
 
-    protected function showUsingRelation(){
+    protected function showUsingRelation(): array{
         return [];
     }
 
