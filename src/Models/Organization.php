@@ -24,6 +24,14 @@ class Organization extends BaseModel
         'name' => 'name'
     ];
 
+    public function viewUsingRelation(): array{
+        return ['parent'];
+    }
+
+    public function showUsingRelation(): array{
+        return ['parent'];
+    }
+
     public function getShowResource(){
         return ShowOrganization::class;
     }
