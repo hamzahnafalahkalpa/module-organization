@@ -8,14 +8,22 @@ use Illuminate\Database\Eloquent\Model;
 use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
 
+/**
+ * @see \Hanafalah\ModuleOrganization\Schemas\Organization
+ * @method self conditionals(mixed $conditionals)
+ * @method array storeOrganization(?OrganizationData $rab_work_list_dto = null)
+ * @method bool deleteOrganization()
+ * @method bool prepareDeleteOrganization(? array $attributes = null)
+ * @method mixed getOrganization()
+ * @method ?Model prepareShowOrganization(?Model $model = null, ?array $attributes = null)
+ * @method array showOrganization(?Model $model = null)
+ * @method array viewOrganizationList()
+ * @method Collection prepareViewOrganizationList(? array $attributes = null)
+ * @method LengthAwarePaginator prepareViewOrganizationPaginate(PaginateData $paginate_dto)
+ * @method array viewOrganizationPaginate(?PaginateData $paginate_dto = null)
+ * @method Builder function organization(mixed $conditionals = null)
+ */
 interface Organization extends DataManagement
 {
-    public function getOrganization(): mixed;
-    public function prepareShowOrganization(?Model $model = null, ? array $attributes = null): ?Model;
-    public function showOrganization(?Model $model = null): array;
     public function prepareStoreOrganization(OrganizationData $organization_dto): Model;
-    public function storeOrganization(?OrganizationData $organization_dto = null): array;
-    public function prepareViewOrganizationList(?array $attributes = null): Collection;
-    public function viewOrganizationList(): array;
-    public function organization(mixed $conditionals = []): Builder;   
 }
