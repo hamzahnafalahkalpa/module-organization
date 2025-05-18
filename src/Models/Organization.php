@@ -24,6 +24,12 @@ class Organization extends BaseModel
         'name' => 'name'
     ];
 
+    protected static function booted(): void{
+        parent::booted();
+        static::addGlobalScope('flag', function ($query) {
+        });
+    }
+
     public function viewUsingRelation(): array{
         return ['parent'];
     }
