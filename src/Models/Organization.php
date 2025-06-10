@@ -26,7 +26,8 @@ class Organization extends BaseModel
 
     protected static function booted(): void{
         parent::booted();
-        static::addGlobalScope('flag', function ($query) {
+        static::addGlobalScope('flag',function($query){
+            //DIKOSONGKAN SEBAGAI TEMPLATE
         });
     }
 
