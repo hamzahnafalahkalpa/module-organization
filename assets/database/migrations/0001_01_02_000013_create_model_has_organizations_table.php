@@ -27,19 +27,19 @@ return new class extends Migration
         $table_name = $this->__table->getTable();
         if (!$this->isTableExists()) {
             Schema::create($table_name, function (Blueprint $table) {
-                $table->id();
+                $table->ulid('id')->primary();
                 $table->string("organization_type", 50);
                 $table->string("organization_id", 36);
-                $table->string("reference_type", 50);
-                $table->string("reference_id", 36);
+                $table->string("model_type", 50);
+                $table->string("model_id", 36);
                 $table->unsignedTinyInteger('current')->default(1);
                 $table->json('props')->nullable();
                 $table->timestamps();
                 $table->softDeletes();
 
                 $table->index(['organization_type', 'organization_id'], 'mho_org_org');
-                $table->index(['reference_type', 'reference_id'], 'mho_org_ref');
-                $table->index('reference_type', 'type_org');
+                $table->index(['model_type', 'model_id'], 'mho_org_ref');
+                $table->index('model_type', 'type_org');
             });
         }
     }
