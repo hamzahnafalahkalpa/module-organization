@@ -26,7 +26,7 @@ class Organization extends PackageManagement implements Contracts\Organization
         ],[
             'parent_id' => $organization_dto->parent_id ?? null,
             'name'      => $organization_dto->name,
-            'flag'      => $this->__entity
+            'flag'      => $organization_dto->flag ?? $this->__entity
         ]);
         foreach ($organization_dto->props as $key => $value) {
             $organization->{$key} = $value;
