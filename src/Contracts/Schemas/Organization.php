@@ -10,6 +10,7 @@ use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
 
 /**
  * @see \Hanafalah\ModuleOrganization\Schemas\Organization
+ * @method self setParamLogic(string $logic, bool $search_value = false, ?array $optionals = [])
  * @method self conditionals(mixed $conditionals)
  * @method array storeOrganization(?OrganizationData $rab_work_list_dto = null)
  * @method bool deleteOrganization()
