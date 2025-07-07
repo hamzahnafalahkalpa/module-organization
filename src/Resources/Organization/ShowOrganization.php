@@ -1,6 +1,6 @@
 <?php
 
-namespace Hanafalah\ModuleOrganization\Resources;
+namespace Hanafalah\ModuleOrganization\Resources\Organization;
 
 use Hanafalah\LaravelSupport\Resources\ApiResource;
 

@@ -3,10 +3,18 @@
 use Hanafalah\ModuleOrganization\Commands\InstallMakeCommand;
 
 return [
-    'namespace' => 'Hanafalah\\ModuleOrganization',
-    'app' => [
+    'app'  => [
         'contracts' => [
             //ADD YOUR CONTRACTS HERE
+        ]
+    ],
+    'libs' => [
+        'model'    => 'Models',
+        'contract' => 'Contracts',
+        'schema'   => 'Schemas'
+    ],
+    'database' => [
+        'models' => [
         ]
     ],
     'libs' => [
