@@ -8,11 +8,15 @@ use Hanafalah\LaravelSupport\Concerns\Support\HasPhone;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Hanafalah\LaravelSupport\Models\BaseModel;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
+use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
 class Organization extends BaseModel
 {
-    use HasProps, SoftDeletes, HasAddress, HasPhone;
+    use HasProps, SoftDeletes, HasAddress, HasPhone, HasUlids;
 
+    public $incrementing            = false;
+    protected $primaryKey           = 'string';
+    protected $keyType              = 'id';
     protected $list                 = ["id", "parent_id", "name", "flag", "props"];
     protected $show                 = [];
     public static $__flags_service  = [];
