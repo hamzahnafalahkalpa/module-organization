@@ -3,44 +3,20 @@
 namespace Hanafalah\ModuleOrganization\Models;
 
 use Hanafalah\ModuleOrganization\Resources\Organization\{ViewOrganization,ShowOrganization};
-use Hanafalah\LaravelHasProps\Concerns\HasProps;
 use Hanafalah\LaravelSupport\Concerns\Support\HasPhone;
-use Illuminate\Database\Eloquent\SoftDeletes;
-use Hanafalah\LaravelSupport\Models\BaseModel;
+use Hanafalah\LaravelSupport\Models\Unicode\Unicode;
 use Hanafalah\ModuleRegional\Concerns\HasAddress;
-use Illuminate\Database\Eloquent\Concerns\HasUlids;
 
-class Organization extends BaseModel
+class Organization extends Unicode
 {
-    use HasProps, SoftDeletes, HasAddress, HasPhone, HasUlids;
-
-    public $incrementing            = false;
-    protected $primaryKey           = 'string';
-    protected $keyType              = 'id';
-    protected $list                 = ["id", "parent_id", "name", "flag", "props"];
-    protected $show                 = [];
-    public static $__flags_service  = [];
-    protected $casts = [
-        'name' => 'string'
-    ];
-
-    protected $getPropsQuery = [
-        'name' => 'name'
-    ];
-
-    protected static function booted(): void{
-        parent::booted();
-        static::addGlobalScope('flag',function($query){
-            //DIKOSONGKAN SEBAGAI TEMPLATE
-        });
-    }
+    use HasAddress, HasPhone;
 
     public function viewUsingRelation(): array{
-        return ['parent'];
+        return $this->mergeArray(['parent'],$this->viewUsingRelation());
     }
 
     public function showUsingRelation(): array{
-        return ['parent'];
+        return $this->mergeArray(['parent'],$this->showUsingRelation());
     }
 
     public function getShowResource(){
@@ -49,10 +25,6 @@ class Organization extends BaseModel
 
     public function getViewResource(){
         return ViewOrganization::class;
-    }
-
-    public function scopeSetIdentityFlags($builder, array $flags){
-        self::$__flags_service = $flags;
     }
 
     public function modelHasOrganization(){return $this->morphOneModel('ModelHasOrganization', 'reference');}

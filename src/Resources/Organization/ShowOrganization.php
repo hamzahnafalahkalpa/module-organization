@@ -3,6 +3,7 @@
 namespace Hanafalah\ModuleOrganization\Resources\Organization;
 
 use Hanafalah\LaravelSupport\Resources\ApiResource;
+use Hanafalah\LaravelSupport\Resources\Unicode\ShowUnicode;
 
 class ShowOrganization extends ViewOrganization
 {
@@ -19,8 +20,8 @@ class ShowOrganization extends ViewOrganization
       "address"       => $this->address,
       "name_owner"    => $this->name_owner,
     ];
-    $arr = $this->mergeArray(parent::toArray($request), $arr);
-
+    $show = $this->resolveNow(new ShowUnicode($this));
+    $arr = $this->mergeArray(parent::toArray($request), $show, $arr);
     return $arr;
   }
 }

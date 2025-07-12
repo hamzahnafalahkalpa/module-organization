@@ -2,21 +2,17 @@
 
 namespace Hanafalah\ModuleOrganization\Resources\Organization;
 
-use Hanafalah\LaravelSupport\Resources\ApiResource;
+use Hanafalah\LaravelSupport\Resources\Unicode\ViewUnicode;
 
-class ViewOrganization extends ApiResource
+class ViewOrganization extends ViewUnicode
 {
   public function toArray(\Illuminate\Http\Request $request): array
   {
     $arr = [
-      'id'            => $this->id,
-      'name'          => $this->name,
-      "flag"          => $this->flag,
       "phone_company" => $this->phone_company,
-      "email_company" => $this->email_company,
-      'created_at'    => $this->created_at,
-      'updated_at'    => $this->updated_at
+      "email_company" => $this->email_company
     ];
+    $arr = $this->mergeArray(parent::toArray($request),$arr);
     return $arr;
   }
 }

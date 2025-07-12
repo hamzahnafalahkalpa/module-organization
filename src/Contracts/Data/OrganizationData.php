@@ -2,4 +2,6 @@
 
 namespace Hanafalah\ModuleOrganization\Contracts\Data;
 
-interface OrganizationData{}
+use Hanafalah\LaravelSupport\Contracts\Data\UnicodeData;
+
+interface OrganizationData extends UnicodeData{}

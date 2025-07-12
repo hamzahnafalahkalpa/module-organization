@@ -2,10 +2,10 @@
 
 namespace Hanafalah\ModuleOrganization\Contracts\Schemas;
 
+use Hanafalah\LaravelSupport\Contracts\Schemas\Unicode;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Model;
-use Hanafalah\LaravelSupport\Contracts\Supports\DataManagement;
 use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
 
 /**
@@ -22,9 +22,9 @@ use Hanafalah\ModuleOrganization\Contracts\Data\OrganizationData;
  * @method Collection prepareViewOrganizationList(? array $attributes = null)
  * @method LengthAwarePaginator prepareViewOrganizationPaginate(PaginateData $paginate_dto)
  * @method array viewOrganizationPaginate(?PaginateData $paginate_dto = null)
- * @method Builder function organization(mixed $conditionals = null)
  */
-interface Organization extends DataManagement
+interface Organization extends Unicode
 {
     public function prepareStoreOrganization(OrganizationData $organization_dto): Model;
+    public function organization(mixed $conditionals = null): Builder;
 }
