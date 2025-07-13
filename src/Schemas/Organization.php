@@ -26,6 +26,8 @@ class Organization extends Unicode implements Contracts\Organization
         return static::$organization_model = $organization;
     }
 
+
+
     public function organization(mixed $conditionals = null): Builder{
         return $this->unicode($conditionals);
     }

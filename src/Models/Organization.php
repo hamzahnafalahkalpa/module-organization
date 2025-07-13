@@ -12,11 +12,11 @@ class Organization extends Unicode
     use HasAddress, HasPhone;
 
     public function viewUsingRelation(): array{
-        return $this->mergeArray(['parent'],$this->viewUsingRelation());
+        return $this->mergeArray(['parent'],parent::viewUsingRelation());
     }
 
     public function showUsingRelation(): array{
-        return $this->mergeArray(['parent'],$this->showUsingRelation());
+        return $this->mergeArray(['parent'],parent::showUsingRelation());
     }
 
     public function getShowResource(){
