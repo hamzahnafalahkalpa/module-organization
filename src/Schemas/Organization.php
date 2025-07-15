@@ -18,7 +18,7 @@ class Organization extends Unicode implements Contracts\Organization
             'name'     => 'organization',
             'tags'     => ['organization', 'organization-index'],
             'forever'  => true
-        ]
+        ]   
     ];
 
     public function prepareStoreOrganization(OrganizationData $organization_dto): Model{
