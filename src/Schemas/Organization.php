@@ -11,7 +11,7 @@ use Illuminate\Database\Eloquent\Model;
 class Organization extends Unicode implements Contracts\Organization
 {
     protected string $__entity = 'Organization';
-    public static $organization_model;
+    public $organization_model;
 
     protected array $__cache = [
         'index' => [
@@ -23,7 +23,7 @@ class Organization extends Unicode implements Contracts\Organization
 
     public function prepareStoreOrganization(OrganizationData $organization_dto): Model{
         $organization = $this->prepareStoreUnicode($organization_dto);
-        return static::$organization_model = $organization;
+        return $this->organization_model = $organization;
     }
 
 

@@ -10,7 +10,7 @@ use Hanafalah\ModuleOrganization\Contracts\Schemas as Contracts;
 class ModelHasOrganization extends PackageManagement implements Contracts\ModelHasOrganization
 {
     protected string $__entity = 'ModelHasOrganization';
-    public static $model_has_organization_model = null;
+    public $model_has_organization_model = null;
 
     public function preapreStoreModelHasOrganization(ModelHasOrganizationData $has_organization_dto){
         $model = $this->modelHasOrganization()->updateOrCreate([
@@ -19,7 +19,7 @@ class ModelHasOrganization extends PackageManagement implements Contracts\ModelH
             'reference_id'      => $has_organization_dto->reference_id,
             'reference_type'    => $has_organization_dto->reference_type,
         ]);
-        return static::$model_has_organization_model = $model;
+        return $this->model_has_organization_model = $model;
     }
 
     public function modelHasOrganization(mixed $conditionals = []): Builder{
