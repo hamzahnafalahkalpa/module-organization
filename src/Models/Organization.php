@@ -12,6 +12,8 @@ class Organization extends Unicode
 {
     use HasAddress, HasPhone;
 
+    protected $table = 'unicodes';
+
     protected static function booted(): void{
         parent::booted();
         static::creating(function ($query) {
