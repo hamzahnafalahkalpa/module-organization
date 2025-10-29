@@ -11,11 +11,15 @@ class ViewOrganization extends ViewUnicode
   {
     $code = Str::snake($this->flag)."_code";
     $arr = [
+      'id'        => $this->id,
+      'parent_id' => $this->parent_id,
+      'name'      => $this->name,
+      'flag'      => $this->flag,
+      'label'     => $this->label,
       $code => $this->{$code},
       "phone_company" => $this->phone_company,
       "email_company" => $this->email_company
     ];
-    $arr = $this->mergeArray(parent::toArray($request),$arr);
     return $arr;
   }
 }
