@@ -26,10 +26,6 @@ class Organization extends Unicode implements Contracts\Organization
         return $this->organization_model = $organization;
     }
 
-    protected function isIdAsPrimaryValidation(): bool{
-        return true;
-    }
-
     public function organization(mixed $conditionals = null): Builder{
         return $this->unicode($conditionals);
     }
